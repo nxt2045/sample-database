@@ -1,0 +1,19 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="query._" />
+          <option value="slydb.query.*" />
+          <option value="slydb.command._" />
+          <option value="slydb.command.INPUT" />
+          <option value="slydb.command.OUTPUT" />
+          <option value="slydb.command.SELECT" />
+          <option value="slydb.command.PROJECT" />
+          <option value="slydb.cmdparser._" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

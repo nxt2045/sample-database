@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.pythonPath": "/Users/nxt/Applications/miniconda3/envs/env_py36/bin/python"
+	}
+}
