@@ -1,7 +1,7 @@
 # slydb
 
 ## 1 Dependency
-conda运行环境下的配置
+1. conda运行环境下的配置
 - [miniconda安装](https://docs.conda.io/en/latest/miniconda.html)
 ```conda
 conda create -n env_py36 python=3.6
@@ -9,8 +9,8 @@ conda activate env_py36
 conda install numpy, BTrees
 pip install sly
 ```
-用pycharm打开项目，编译器指定conda下env_py36
-
+2. 用pycharm打开项目，编译器指定conda下env_py36
+3. mark slydb folder as source root
 
 ## 2 Plan
 
