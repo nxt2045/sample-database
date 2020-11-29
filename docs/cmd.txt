@@ -8,6 +8,7 @@ R1 := select(R, (time > 50) and (qty < 30))
 // select rows of R whose time > 50
 R8 := select(R, time > 50)
 
+
 // if selection filter is string and it’s not any of the column name,
 // please add quotation marks
 R9 := select(R, pricerange = "outrageous")

@@ -1,6 +1,6 @@
 from .cmdlexer import *
 from .operations import *
-
+from sly import Parser
 """
 https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer
 CommandParser: execrate tokens
@@ -109,7 +109,6 @@ class CmdParser(Parser):
     # TODO:
     def expr(self, p):
         return pandas.concat([self._tables[p.NAME0], self._tables[p.NAME1]])
-
 
     # TODO: all below is for query
     # Note: OR = r'or'

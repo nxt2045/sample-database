@@ -1,7 +1,9 @@
 from .table import Table
+
 """
 do database level function
 """
+
 
 def read_csv(path, sep):
     with open(path, 'r') as file:
