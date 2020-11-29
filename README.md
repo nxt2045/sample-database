@@ -116,7 +116,7 @@ NAME DEFINE expr
 - print eg:R
 - project
 ### 5.2 required
-[cmd.txt]("docs/cmd.txt")
+"docs/cmd.txt"
 ```txt
 
 // import vertical bar delimited of sales file.
