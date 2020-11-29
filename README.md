@@ -93,7 +93,7 @@ NAME DEFINE expr
 
 
 ### 3.5 tinydb (python)
-- 代码很Robust&简短&规范，用于参考
+- 代码很 Robust &简短 &规范，用于参考
 - Document DB(NOSQL), cmd parser
 - Super popular in github
 - [source]()
@@ -102,7 +102,7 @@ NAME DEFINE expr
 - [概述](https://blog.csdn.net/mk1843109092/article/details/96968465?utm_medium=distribute.pc_relevant.none-task-blog-title-2&spm=1001.2101.3001.4242)
 - 多态
 - 继承
-- [Overriide](https://docs.python.org/zh-cn/3/reference/datamodel.html#special-method-names)
+- [Override](https://docs.python.org/zh-cn/3/reference/datamodel.html#special-method-names)
 - 装饰器@
 - lambda, filter, map
 
@@ -116,7 +116,7 @@ NAME DEFINE expr
 - print eg:R
 - project
 ### 5.1 all
-[text.txt]("./data/text.txt")
+[test.txt]("data/test.txt")
 ```txt
 
 // import vertical bar delimited of sales file.
