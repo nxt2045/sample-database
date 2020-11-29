@@ -1,5 +1,7 @@
 from .table import Table
-
+"""
+do database level function
+"""
 
 def read_csv(path, sep):
     with open(path, 'r') as file:
@@ -23,11 +25,11 @@ def join(t1_name, t1: Table, t2_name, t2: Table, query):
     table = Table(t1_col_names + t2_col_names)
     return table
 
-def project(table:Table, col_names):
+
+def project(table: Table, col_names):
     col_idxs = [table.cols[col_name] for col_name in col_names]
     rows = table[:, col_idxs]
     table = Table(col_names)
     for i in range(len(rows)):
         table.insert(rows[i])
     return table
-
