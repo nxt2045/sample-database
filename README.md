@@ -20,6 +20,7 @@ pip install sly
     - override自带python method
 - B-Tree
 - 跑通老师的命令
+
 后期：
 - 异常抛出和处理
 - typing类型指定
@@ -114,6 +115,7 @@ NAME DEFINE expr
 - input
 - output
 - print eg:R
+- select
 - project
 ### 5.2 required
 "docs/cmd.txt"

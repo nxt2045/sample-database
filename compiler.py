@@ -42,11 +42,11 @@ class MyLexer(Lexer):
 
 
 class MyParser(Parser):
-    '''
+    """
     @_('statements statements')
     def statements(self, p):
         return p.statement + [ p.statememts ]
-    '''
+    """
     tokens = MyLexer.tokens
 
     def __init__(self):
@@ -78,7 +78,7 @@ class MyParser(Parser):
 
     @_('INPUT "(" NAME ")"')
     def expr(self, p):
-        print("p:",p)
+        print("p:", p)
         return pd.read_csv(p.NAME, sep='|')
 
     @_('SELECT "(" NAME "," expr ")"')
@@ -199,5 +199,3 @@ if __name__ == '__main__':
             # for tok in lexer.tokenize(text):
             #    print(tok)
             parser.parse(lexer.tokenize(text))
-
-

@@ -1,5 +1,5 @@
 from .cmdlexer import *
-from .operations import *
+from .database import *
 from sly import Parser
 """
 https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer
@@ -17,18 +17,19 @@ class CmdParser(Parser):
     tokens = CmdLexer.tokens
 
     def __init__(self):
-        self._tables = {}
+        self._database = SlyDB()
 
     # Note: recursively run statement
     @_('NAME DEFINE expr')
     def statement(self, p):
-        self._tables[p.NAME] = p.expr
+        self._database.add(p.NAME, p.expr)
 
     @_('expr')
     def statement(self, p):
-        if p.expr in self._tables:
+        table = self._database.get(p.expr)
+        if table:
             # Note: eg. R
-            self._tables[p.expr].print(sep=", ")
+            table.print(sep=", ")
         else:
             print(p.expr)
 
@@ -38,7 +39,7 @@ class CmdParser(Parser):
 
     @_('OUTPUT "(" NAME "," NAME ")"')
     def statement(self, p):
-        self._tables[p.NAME0].to_csv(p.NAME1, sep='|')
+        self._database.get(p.NAME0).to_csv(p.NAME1, sep='|')
 
     @_('HASH "(" NAME "," expr ")"')
     @_('BTREE "(" NAME "," expr ")"')
@@ -49,10 +50,9 @@ class CmdParser(Parser):
         self._tables[p.NAME] = self._tables[p.NAME].sort_index()
 
     @_('SELECT "(" NAME "," expr ")"')
-    # TODO:
     def expr(self, p):
         # 分析见README.md
-        return self._tables[p.NAME].query(p.expr)
+        return self._database.select(p.NAME, p.expr)
 
     @_('JOIN "(" NAME "," NAME "," expr ")"')
     # TODO:
@@ -65,14 +65,14 @@ class CmdParser(Parser):
         query = p.expr.replace(".", "_")
         return pandas.merge(df0.assign(key=0), df1.assign(key=0), on='key').drop('key', axis=1).query(query)
         """
-        return join(p.NAME0, self._tables[p.NAME0], p.NAME1, self._tables[p.NAME1], p.expr)
+        return self._database.join(p.NAME0,  p.NAME1,  p.expr)
 
     @_('PROJECT "(" NAME "," expr ")"')
     def expr(self, p):
         l = p.expr
         if type(l) != list:
             l = [p.expr]
-        return project(self._tables[p.NAME], col_names=l)
+        return self._database.project(p.NAME, col_names=l)
 
     @_('AVG "(" NAME "," NAME ")"')
     # TODO:
