@@ -13,6 +13,7 @@ pip install sly
 
 
 ## 2 Plan
+
 前期：
 - query的实现，
     - 参考tinidb+pandas
@@ -30,7 +31,6 @@ pip install sly
 
 
 ## 3 Notes
-
 ### 3.1 pandas_parser
 - 前期只需要大致理解complier.py，
 - [官方范例](https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer)
@@ -106,9 +106,10 @@ NAME DEFINE expr
 - 装饰器@
 - lambda, filter, map
 
+## directory
 
 
-## 4 Function
+## 5 Function
 [text.txt]("./data/text.txt")
 ```txt
 

@@ -31,15 +31,14 @@ class CmdParser(Parser):
 
     @_('expr')
     def statement(self, p):
-        # eg: R
         if p.expr in self._tables:
-            print(self._tables[p.expr])
+            # eg: R
+            self._tables[p.expr].print(sep=", ")
         else:
             print(p.expr)
 
     @_('INPUT "(" NAME ")"')
     def expr(self, p):
-        print("p:", p)
         return read_csv(p.NAME, sep='|')
 
     @_('OUTPUT "(" NAME "," NAME ")"')
@@ -68,14 +67,14 @@ class CmdParser(Parser):
         query = p.expr.replace(".", "_")
         return pandas.merge(df0.assign(key=0), df1.assign(key=0), on='key').drop('key', axis=1).query(query)
         """
-        join(self._tables[p.NAME0], self._tables[p.NAME1], p.expr)
+        return join(p.NAME0, self._tables[p.NAME0], p.NAME1, self._tables[p.NAME1], p.expr)
 
     @_('PROJECT "(" NAME "," expr ")"')
     def expr(self, p):
         l = p.expr
         if type(l) != list:
             l = [p.expr]
-        return tablize(self._tables[p.NAME], col_names=l)
+        return project(self._tables[p.NAME], col_names=l)
 
     @_('AVG "(" NAME "," NAME ")"')
     def expr(self, p):

@@ -1,4 +1,7 @@
 R := inputfromfile(sales)
+R
+R2 := project(R, saleid, qty, customerid, pricerange)
+R2
 R1 := select(R, (time > 50) and (qty < 30)) 
 R8 := select(R, time > 50)
 R9 := select(R, pricerange = "outrageous")	
