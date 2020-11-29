@@ -40,6 +40,7 @@ class SlyDB:
         t2 = self._tables[t2_name]
         t1_col_names = [t1_name + "_" + x for x in t1.col_names]
         t2_col_names = [t2_name + "_" + x for x in t2.col_names]
+        # ...
         table = Table(t1_col_names + t2_col_names)
         return table
 
@@ -51,6 +52,7 @@ class SlyDB:
         for i in range(matrix.shape[0]):
             table.insert(matrix[i])
         return table
+
 
     def project(self, name: str, col_names):
         table = self._tables[name]

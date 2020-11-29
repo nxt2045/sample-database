@@ -15,6 +15,7 @@ CommandParser: execrate tokens
 
 class CmdParser(Parser):
     tokens = CmdLexer.tokens
+    debugfile = 'parser.out'
 
     def __init__(self):
         self._database = SlyDB()
@@ -29,7 +30,7 @@ class CmdParser(Parser):
         table = self._database.get(p.expr)
         if table:
             # Note: eg. R
-            table.print(sep=", ")
+            print(table, sep=", ")
         else:
             print(p.expr)
 
@@ -58,13 +59,6 @@ class CmdParser(Parser):
     # TODO:
     # Note: eg. T1 := join(R1, S, R1.qty <= S.Q)
     def expr(self, p):
-        """
-        pandas:
-        df0 = self._tables[p.NAME0].add_prefix(p.NAME0 + "_")
-        df1 = self._tables[p.NAME1].add_prefix(p.NAME1 + "_")
-        query = p.expr.replace(".", "_")
-        return pandas.merge(df0.assign(key=0), df1.assign(key=0), on='key').drop('key', axis=1).query(query)
-        """
         return self._database.join(p.NAME0,  p.NAME1,  p.expr)
 
     @_('PROJECT "(" NAME "," expr ")"')
@@ -77,7 +71,7 @@ class CmdParser(Parser):
     @_('AVG "(" NAME "," NAME ")"')
     # TODO:
     def expr(self, p):
-        return self._tables[p.NAME0][p.NAME1].mean()
+        return self._database.get(p.NAME0).avg(p.NAME1)
 
     @_('SUMGROUP "(" NAME "," NAME "," expr ")"')
     # TODO:

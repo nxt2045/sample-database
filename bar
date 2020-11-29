@@ -6,11 +6,3 @@ saleid|itemid|customerid|storeid|time|qty|pricerange
 288|item46|customer2|store95|67|26|outrageous
 875|item83|customer59|store56|59|20|outrageous
 289|item16|customer2|store95|92|2|cheap
-saleid|itemid|customerid|storeid|time|qty|pricerange
-149|item103|customer2|store23|67|2|cheap
-147|item81|customer2|store4|92|11|outrageous
-778|item75|customer160|store72|67|17|supercheap
-101|item105|customer2|store9|74|28|expensive
-288|item46|customer2|store95|67|26|outrageous
-875|item83|customer59|store56|59|20|outrageous
-289|item16|customer2|store95|92|2|cheap

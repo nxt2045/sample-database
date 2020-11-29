@@ -101,23 +101,101 @@ NAME DEFINE expr
 
 ### 3.6 python语法
 - [概述](https://blog.csdn.net/mk1843109092/article/details/96968465?utm_medium=distribute.pc_relevant.none-task-blog-title-2&spm=1001.2101.3001.4242)
-- 多态
-- 继承
+- eval, exec
+- 多态/继承
 - [Override](https://docs.python.org/zh-cn/3/reference/datamodel.html#special-method-names)
-- 装饰器@
-- lambda, filter, map
+- lambda, filter, map, reduce, 装饰器@
 
-## directory
+## 4 项目目录
+- complier.py 老师提供的
+- main.py 测试
+- slydb 核心代码
 
 
 ## 5 Function
-### 5.1 finished
+### 5.1 已完成
 - input
 - output
-- print eg:R
+- print
 - select
 - project
-### 5.2 required
+- avg
+### 5.2 未完成
+- join
+- HASH
+- BTree
+### 5.3 测试输出
+> run main.py
+```
+R
+saleid,itemid,customerid,storeid,time,qty,pricerange
+45,item133,customer2,store63,49,23,outrageous
+658,item75,customer2,store89,46,43,outrageous
+149,item103,customer2,store23,67,2,cheap
+398,item82,customer2,store41,3,27,outrageous
+147,item81,customer2,store4,92,11,outrageous
+778,item75,customer160,store72,67,17,supercheap
+829,item112,customer2,store70,63,43,supercheap
+101,item105,customer2,store9,74,28,expensive
+940,item62,customer2,store90,67,39,outrageous
+864,item119,customer12,store38,67,49,outrageous
+288,item46,customer2,store95,67,26,outrageous
+875,item83,customer59,store56,59,20,outrageous
+783,item86,customer180,store29,67,46,outrageous
+289,item16,customer2,store95,92,2,cheap
+814,item101,customer2,store45,49,41,outrageous
+572,item92,customer59,store91,63,31,cheap
+428,item114,customer51,store29,42,15,outrageous
+R1
+saleid,itemid,customerid,storeid,time,qty,pricerange
+149,item103,customer2,store23,67,2,cheap
+147,item81,customer2,store4,92,11,outrageous
+778,item75,customer160,store72,67,17,supercheap
+101,item105,customer2,store9,74,28,expensive
+288,item46,customer2,store95,67,26,outrageous
+875,item83,customer59,store56,59,20,outrageous
+289,item16,customer2,store95,92,2,cheap
+R8
+saleid,itemid,customerid,storeid,time,qty,pricerange
+149,item103,customer2,store23,67,2,cheap
+147,item81,customer2,store4,92,11,outrageous
+778,item75,customer160,store72,67,17,supercheap
+829,item112,customer2,store70,63,43,supercheap
+101,item105,customer2,store9,74,28,expensive
+940,item62,customer2,store90,67,39,outrageous
+864,item119,customer12,store38,67,49,outrageous
+288,item46,customer2,store95,67,26,outrageous
+875,item83,customer59,store56,59,20,outrageous
+783,item86,customer180,store29,67,46,outrageous
+289,item16,customer2,store95,92,2,cheap
+572,item92,customer59,store91,63,31,cheap
+R9
+saleid,itemid,customerid,storeid,time,qty,pricerange
+45,item133,customer2,store63,49,23,outrageous
+658,item75,customer2,store89,46,43,outrageous
+398,item82,customer2,store41,3,27,outrageous
+147,item81,customer2,store4,92,11,outrageous
+940,item62,customer2,store90,67,39,outrageous
+864,item119,customer12,store38,67,49,outrageous
+288,item46,customer2,store95,67,26,outrageous
+875,item83,customer59,store56,59,20,outrageous
+783,item86,customer180,store29,67,46,outrageous
+814,item101,customer2,store45,49,41,outrageous
+428,item114,customer51,store29,42,15,outrageous
+R2
+saleid,qty,customerid,pricerange
+149,2,customer2,cheap
+147,11,customer2,outrageous
+778,17,customer160,supercheap
+101,28,customer2,expensive
+288,26,customer2,outrageous
+875,20,customer59,outrageous
+289,2,customer2,cheap
+R3
+15.142857142857142
+
+```
+### 5.4 要求
 "docs/cmd.txt"
 ```txt
 
