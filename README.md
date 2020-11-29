@@ -110,6 +110,12 @@ NAME DEFINE expr
 
 
 ## 5 Function
+### finished
+- input
+- output
+- print eg:R
+- project
+### 5.1 all
 [text.txt]("./data/text.txt")
 ```txt
 
