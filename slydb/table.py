@@ -81,6 +81,7 @@ class Table:
                 new_matrix = np.concatenate((new_matrix, [row]))
         return new_matrix
 
+
     def avg(self, col_name):
         # 插入行
         col_idx = self.cols[col_name]

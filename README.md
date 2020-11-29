@@ -113,17 +113,28 @@ NAME DEFINE expr
 
 
 ## 5 Function
+**注意范例命令的调用顺序**
 ### 5.1 已完成
 - input
 - output
 - print
-- select
+- select(no index)
 - project
 - avg
+
 ### 5.2 未完成
 - join
-- HASH
+- sumgroup
+- avggroup
+- sort
+- movavg
+- movsum
 - BTree
+- select(with index)
+- HASH
+- concat
+
+
 ### 5.3 测试输出
 > run main.py
 ```

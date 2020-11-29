@@ -69,7 +69,6 @@ class CmdParser(Parser):
         return self._database.project(p.NAME, col_names=l)
 
     @_('AVG "(" NAME "," NAME ")"')
-    # TODO:
     def expr(self, p):
         return self._database.get(p.NAME0).avg(p.NAME1)
 

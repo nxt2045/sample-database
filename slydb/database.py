@@ -45,14 +45,14 @@ class SlyDB:
         return table
 
     def select(self, name: str, query: str):
-        # TODO
+        # Note: not use index, need to achieve Hash/B-tree version,
+        #  see example cmd carefully, there are 4 select cmd
         table = self._tables[name]
-        matrix = table.select(query)
+        matrix = self._tables[name].select(query)
         table = Table(table.col_names)
         for i in range(matrix.shape[0]):
             table.insert(matrix[i])
         return table
-
 
     def project(self, name: str, col_names):
         table = self._tables[name]
