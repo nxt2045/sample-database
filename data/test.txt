@@ -1,8 +1,6 @@
 R := inputfromfile(sales)
 R
 R1 := select(R, (time > 50) and (qty < 30))
-R1 := select(R, ((time > 50) and (qty < 30)) or (time < 10))
-
 R1
 R8 := select(R, time > 50)
 R8
