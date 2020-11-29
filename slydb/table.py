@@ -39,7 +39,7 @@ class Table:
         self.rows_number += 1
 
     def query(self, query: str):
-        # todo
+        # TODO
         rows = self.rows[np.where(query)]
         return rows
 

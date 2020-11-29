@@ -17,7 +17,7 @@ class CmdLexer(Lexer):
     """
     tokens = {INPUT, OUTPUT, SELECT, PROJECT, AVGGROUP, AVG, SUMGROUP, SORT, JOIN, MOVAVG, MOVSUM, CONCAT, BTREE, HASH, COMP, OR, AND, NAME, NUMBER, DEFINE}
     literals = {'(', ')', ',', '"'}
-    # nxt: regular expression rules for tokens
+    # Note: regular expression rules for tokens
     INPUT = r'inputfromfile'
     OUTPUT = r'outputtofile'
     SELECT = r'select'
@@ -38,13 +38,13 @@ class CmdLexer(Lexer):
     NAME = r'[\']?[a-zA-Z_][a-zA-Z0-9_.]*[\']?'
     NUMBER = r'\d+'
     DEFINE = r':='
-    # nxt: ignore space and tab characters between tokens
+    # Note: ignore space and tab characters between tokens
     ignore = ' \t'
-    # nxt: other ignored expression
+    # Note: other ignored expression
     ignore_comment = r'//.*'
     ignore_newline = r'\n+'
 
-    # nxt: tracking命令行数
+    # Note: tracking命令行数
     @_(r'\n+')
     def ignore_newline(self, t):
         self.lineno += len(t.value)

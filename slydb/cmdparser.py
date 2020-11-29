@@ -19,7 +19,7 @@ class CmdParser(Parser):
     def __init__(self):
         self._tables = {}
 
-    # recursively run statement
+    # Note: recursively run statement
     @_('NAME DEFINE expr')
     def statement(self, p):
         self._tables[p.NAME] = p.expr
@@ -27,7 +27,7 @@ class CmdParser(Parser):
     @_('expr')
     def statement(self, p):
         if p.expr in self._tables:
-            # eg: R
+            # Note: eg. R
             self._tables[p.expr].print(sep=", ")
         else:
             print(p.expr)
@@ -42,18 +42,21 @@ class CmdParser(Parser):
 
     @_('HASH "(" NAME "," expr ")"')
     @_('BTREE "(" NAME "," expr ")"')
+    # TODO:
     def statement(self, p):
         self._tables[p.NAME] = self._tables[p.NAME].reset_index()
         self._tables[p.NAME] = self._tables[p.NAME].set_index(p.expr)
         self._tables[p.NAME] = self._tables[p.NAME].sort_index()
 
     @_('SELECT "(" NAME "," expr ")"')
+    # TODO:
     def expr(self, p):
         # 分析见README.md
         return self._tables[p.NAME].query(p.expr)
 
     @_('JOIN "(" NAME "," NAME "," expr ")"')
-    # eg: T1 := join(R1, S, R1.qty <= S.Q)
+    # TODO:
+    # Note: eg. T1 := join(R1, S, R1.qty <= S.Q)
     def expr(self, p):
         """
         pandas:
@@ -72,44 +75,53 @@ class CmdParser(Parser):
         return project(self._tables[p.NAME], col_names=l)
 
     @_('AVG "(" NAME "," NAME ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME0][p.NAME1].mean()
 
     @_('SUMGROUP "(" NAME "," NAME "," expr ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME0].groupby(p.expr)[p.NAME1].sum()
 
     @_('AVGGROUP "(" NAME "," NAME "," expr ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME0].groupby(p.expr)[p.NAME1].mean()
 
     @_('SORT "(" NAME "," expr ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME].sort_values(by=p.expr)
 
     @_('MOVAVG "(" NAME "," NAME "," NUMBER ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME0][p.NAME1].rolling(int(p.NUMBER), min_periods=1).mean()
         # df[col].rolling(num,min_periods=1).mean()
 
     @_('MOVSUM "(" NAME "," NAME "," NUMBER ")"')
+    # TODO:
     def expr(self, p):
         return self._tables[p.NAME0][p.NAME1].rolling(int(p.NUMBER), min_periods=1).sum()
 
     @_('CONCAT "(" NAME "," NAME ")"')
+    # TODO:
     def expr(self, p):
         return pandas.concat([self._tables[p.NAME0], self._tables[p.NAME1]])
 
-    # nxt: OR = r'or'
+
+    # TODO: all below is for query
+    # Note: OR = r'or'
     @_('"(" expr ")" OR "(" expr ")"')
     def expr(self, p):
-        # nxt: "or" is python operator or
+        # Note: "or" is python operator or
         return p.expr0 + " or " + p.expr1
 
-    # nxt: AND = r'and'
+    # Note: AND = r'and'
     @_('"(" expr ")" AND "(" expr ")"')
     def expr(self, p):
-        # nxt: "and" is python operator and
+        # Note: "and" is python operator and
         return p.expr0 + " and " + p.expr1
 
     # The comparators for select and join will be =, <, >, !=, >=, <=.
