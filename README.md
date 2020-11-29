@@ -110,13 +110,13 @@ NAME DEFINE expr
 
 
 ## 5 Function
-### finished
+### 5.1 finished
 - input
 - output
 - print eg:R
 - project
-### 5.1 all
-[test.txt]("data/test.txt")
+### 5.2 required
+[cmd.txt]("docs/cmd.txt")
 ```txt
 
 // import vertical bar delimited of sales file.
