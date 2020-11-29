@@ -1,6 +1,4 @@
-from sly import Lexer, Parser
-from .table import *
-import numpy as np
+from sly import Lexer
 
 """
 https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer

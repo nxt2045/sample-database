@@ -1,10 +1,5 @@
-from sly import Lexer, Parser
-from .table import *
 from .cmdlexer import *
-import numpy as np
-from typing import Dict, Type, Set, Union, Tuple
 from .operations import *
-from .table import Table
 
 """
 https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer
