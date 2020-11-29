@@ -1,18 +1,12 @@
+import re
+
 import numpy as np
-
-"""
-函数和类的设计，参考SQL语法和pandas
-https://www.w3school.com.cn/sql/index.asp
-https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html#pandas.DataFrame.query
-python类的override
-https://docs.python.org/zh-cn/3/reference/datamodel.html#special-method-names
-"""
-
 
 class Table:
     def __init__(self, col_names):
         self.cols = {}
         self.rows = np.empty([0, len(col_names)])
+        self.rows_number = 0
         self.col_names = np.array([col_names])
         for col_idx, col_name in enumerate(col_names):
             self.cols[col_name] = col_idx
@@ -32,12 +26,14 @@ class Table:
                     print(" %s " % sep, end='', file=file)
 
     def insert(self, row):
-        return
+        self.rows = np.concatenate((self.rows, row))
+        self.rows_number += 1
 
-    def select(self, columns):
-        return
+    def query(self, query: str):
+        # todo
+        rows = self.rows[np.where(query)]
+        return rows
 
-    def query(self,query):
 
 
 

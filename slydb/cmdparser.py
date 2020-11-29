@@ -14,24 +14,24 @@ CommandParser: execrate tokens
         @_('statements statements')
         def statements(self, p):
     p: YaccProduction object, {token, matched cmd}
+    everytime use "p.expr", match func statement again.
 """
 
 
 class CmdParser(Parser):
-
     tokens = CmdLexer.tokens
 
     def __init__(self):
         self._tables = {}
 
+    # recursively run statement
     @_('NAME DEFINE expr')
     def statement(self, p):
-        # 递归执行
         self._tables[p.NAME] = p.expr
 
     @_('expr')
     def statement(self, p):
-        # nxt: >> R
+        # eg: R
         if p.expr in self._tables:
             print(self._tables[p.expr])
         else:
@@ -54,16 +54,21 @@ class CmdParser(Parser):
         self._tables[p.NAME] = self._tables[p.NAME].sort_index()
 
     @_('SELECT "(" NAME "," expr ")"')
-    # nxt: select(R, (A > 5) or (B < 3))
     def expr(self, p):
-        return self._tables[p.NAME].select(p.expr)
+        # 分析见README.md
+        return self._tables[p.NAME].query(p.expr)
 
     @_('JOIN "(" NAME "," NAME "," expr ")"')
+    # eg: T1 := join(R1, S, R1.qty <= S.Q)
     def expr(self, p):
+        """
+        pandas:
         df0 = self._tables[p.NAME0].add_prefix(p.NAME0 + "_")
         df1 = self._tables[p.NAME1].add_prefix(p.NAME1 + "_")
         query = p.expr.replace(".", "_")
         return pandas.merge(df0.assign(key=0), df1.assign(key=0), on='key').drop('key', axis=1).query(query)
+        """
+        join(self._tables[p.NAME0], self._tables[p.NAME1], p.expr)
 
     @_('PROJECT "(" NAME "," expr ")"')
     def expr(self, p):
@@ -112,7 +117,6 @@ class CmdParser(Parser):
     def expr(self, p):
         # nxt: "and" is python operator and
         return p.expr0 + " and " + p.expr1
-
 
     # The comparators for select and join will be =, <, >, !=, >=, <=.
     @_('NAME COMP NAME')
