@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 import pandas as pd
 from sly import Lexer, Parser
+from utils import *
+
+"""
+https://sly.readthedocs.io/en/latest/sly.html#writing-a-lexer
+ CommandLexer: break up the input cmd into "tokens".
+     strings that correspond to the "base case" symbols used in required grammar. 
+     These are keywords, such as "select" or "create"; 
+     punctuation and relation symbols such as "()," ">=<"; 
+     and other _database (of columns or tables);
+"""
 
 
 class MyLexer(Lexer):
@@ -42,24 +52,25 @@ class MyLexer(Lexer):
 
 
 class MyParser(Parser):
-    """
+    '''
     @_('statements statements')
     def statements(self, p):
         return p.statement + [ p.statememts ]
-    """
+    '''
     tokens = MyLexer.tokens
+    # debugfile = 'parser.out'
 
     def __init__(self):
         self.names = {}
 
     @_('NAME DEFINE expr')
     def statement(self, p):
-        print("NAME DEFINE expr")
+        # print("NAME DEFINE expr")
         self.names[p.NAME] = p.expr
 
     @_('expr')
     def statement(self, p):
-        print("expr")
+        # print("expr")
         if p.expr in self.names:
             print(self.names[p.expr])
         else:
@@ -74,21 +85,20 @@ class MyParser(Parser):
 
     @_('OUTPUT "(" NAME "," NAME ")"')
     def statement(self, p):
-        self.names[p.NAME0].to_csv(p.NAME1, sep='|', index=False)
+        self.names[p.NAME0].to_csv(p.NAME1, sep='|')
 
     @_('INPUT "(" NAME ")"')
     def expr(self, p):
-        print("p:", p)
-        return pd.read_csv(p.NAME, sep='|')
+        return read_csv(p.NAME, sep='|')
 
     @_('SELECT "(" NAME "," expr ")"')
     def expr(self, p):
-        print('SELECT "(" NAME "," expr ")"')
+        # print('SELECT "(" NAME "," expr ")"')
         return self.names[p.NAME].query(p.expr)
 
     @_('JOIN "(" NAME "," NAME "," expr ")"')
     def expr(self, p):
-        print('JOIN "(" NAME "," NAME "," expr ")"')
+        # print('JOIN "(" NAME "," NAME "," expr ")"')
         df0 = self.names[p.NAME0].add_prefix(p.NAME0 + "_")
         df1 = self.names[p.NAME1].add_prefix(p.NAME1 + "_")
         query = p.expr.replace(".", "_")
@@ -99,7 +109,7 @@ class MyParser(Parser):
         l = p.expr
         if type(l) != list:
             l = [p.expr]
-        return pd.DataFrame(self.names[p.NAME], columns=l)
+        return project(self.names[p.NAME], col_names=l)
 
     @_('AVG "(" NAME "," NAME ")"')
     def expr(self, p):
@@ -120,7 +130,6 @@ class MyParser(Parser):
     @_('MOVAVG "(" NAME "," NAME "," NUMBER ")"')
     def expr(self, p):
         return self.names[p.NAME0][p.NAME1].rolling(int(p.NUMBER), min_periods=1).mean()
-        # df[col].rolling(num,min_periods=1).mean()
 
     @_('MOVSUM "(" NAME "," NAME "," NUMBER ")"')
     def expr(self, p):
@@ -132,17 +141,17 @@ class MyParser(Parser):
 
     @_('"(" expr ")" OR "(" expr ")"')
     def expr(self, p):
-        print('"(" expr ")" OR "(" expr ")"')
+        # print('"(" expr ")" OR "(" expr ")"')
         return p.expr0 + " or " + p.expr1;
 
     @_('"(" expr ")" AND "(" expr ")"')
     def expr(self, p):
-        print('"(" expr ")" AND "(" expr ")"')
+        # print('"(" expr ")" AND "(" expr ")"')
         return p.expr0 + " and " + p.expr1;
 
     @_('NAME COMP NAME')
     def expr(self, p):
-        print('NAME COMP NAME')
+        # print('NAME COMP NAME')
         if p.COMP == "=":
             return p.NAME0 + "==" + p.NAME1
             # return p.NAME0+"=="+"\""+p.NAME1+"\""
@@ -152,7 +161,7 @@ class MyParser(Parser):
 
     @_('NAME COMP "\"" NAME "\""')
     def expr(self, p):
-        print('NAME COMP "\"" NAME "\""')
+        # print('NAME COMP "\"" NAME "\""')
         if p.COMP == "=":
             return p.NAME0 + "==" + "\"" + p.NAME1 + "\""
         else:
@@ -160,7 +169,7 @@ class MyParser(Parser):
 
     @_('NAME COMP NUMBER')
     def expr(self, p):
-        print('NAME COMP NUMBER')
+        # print('NAME COMP NUMBER')
         if p.COMP == "=":
             return p.NAME + "==" + p.NUMBER
         else:
@@ -168,34 +177,49 @@ class MyParser(Parser):
 
     @_('NAME "," expr')
     def expr(self, p):
-        print('NAME "," expr')
+        # print('NAME "," expr')
         l = [p.NAME]
         if type(p.expr) == list:
             l.extend(p.expr)
         else:
             l.append(p.expr)
-        return l;
+        return l
 
     @_('"(" expr ")"')
     def expr(self, p):
-        print('"(" expr ")"')
-        return p.expr;
+        # print('"(" expr ")"')
+        return p.expr
 
     @_('NAME')
     def expr(self, p):
-        print('NAME')
+        # print('NAME')
         return p.NAME
 
 
 if __name__ == '__main__':
     lexer = MyLexer()
     parser = MyParser()
-    while True:
-        try:
-            text = input('pd >> ')
-        except EOFError:
-            break
-        if text:
-            # for tok in lexer.tokenize(text):
-            #    print(tok)
-            parser.parse(lexer.tokenize(text))
+    test_mode = "auto"  # auto
+    if test_mode == "input":
+        while True:
+            try:
+                text = input('pd >> ')
+            except EOFError:
+                break
+            if text:
+                # for tok in lexer.tokenize(text):
+                #    print(tok)
+                parser.parse(lexer.tokenize(text))
+    elif test_mode == "auto":
+        lexer = MyLexer()
+        parser = MyParser()
+        with open('test.txt', 'r') as file:
+            lines = [line.rstrip() for line in file.readlines()]  # All lines including the blank ones
+            commands = [line for line in lines if line]  # Non-blank lines
+        for i in range(len(commands)):
+            if commands[i]:
+                text = commands[i]
+                print("\n[%d] pd >> %s" % (int(i + 1), text))
+                # for token in lexer.tokenize(text):
+                #     print("\t", token)
+                parser.parse(lexer.tokenize(text))

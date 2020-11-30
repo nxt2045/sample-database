@@ -10,7 +10,6 @@ conda install numpy, BTrees
 pip install sly
 ```
 2. 用pycharm打开项目，编译器指定conda下env_py36
-3. mark slydb folder as source root
 
 ## 2 Plan
 
@@ -106,15 +105,11 @@ NAME DEFINE expr
 - [Override](https://docs.python.org/zh-cn/3/reference/datamodel.html#special-method-names)
 - lambda, filter, map, reduce, 装饰器@
 
-## 4 项目目录
-- complier.py 老师提供的
-- main.py 测试
-- slydb 核心代码
 
 
-## 5 Function
+## 4 Function
 **注意范例命令的调用顺序**
-### 5.1 已完成
+### 4.1 已完成
 - input
 - output
 - print
@@ -122,7 +117,7 @@ NAME DEFINE expr
 - project
 - avg
 
-### 5.2 未完成
+### 4.2 未完成
 - join
 - sumgroup
 - avggroup
@@ -135,7 +130,7 @@ NAME DEFINE expr
 - concat
 
 
-### 5.3 测试输出
+### 4.3 测试输出
 > run main.py
 ```
 R
