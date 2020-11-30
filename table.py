@@ -9,7 +9,7 @@ class Table:
     def __init__(self, col_names: List[str], data=None):
         self.cols = {}
         self.rows = {}
-        self.col_dtypes = {}
+        self.dtypes = {}  # 每一列对应的数据类型
         self.col_names = col_names
         for col_idx, col_name in enumerate(col_names):
             self.cols[col_name] = col_idx
@@ -28,6 +28,7 @@ class Table:
                 f.write("\n")
 
     def __get_dtype(self, words):
+        # 得到一个list的共同数据类型
         def is_dtype(words, dtype):
             try:
                 for w in words:
@@ -36,22 +37,23 @@ class Table:
             except ValueError:
                 return False
 
-        data_types = [int, float, str]
+        data_types = [int, float]
         for data_type in data_types:
             if is_dtype(words, data_type):
                 return data_type
-        return str
+        return str  # 不统一就当str处理
 
     def update_dtypes(self):
+        # 更新col的dtype
         if self.matrix.shape[0] == 0:
             pass
         else:
             for col_idx, col_name in enumerate(self.col_names):
                 data = self.matrix[:, col_idx].flatten()
-                self.col_dtypes[col_name] = self.__get_dtype(data)
+                self.dtypes[col_name] = self.__get_dtype(data)
 
     def insert(self, data):
-        # 插入行
+        # 插入行/多行
         data = np.array(data)
         if len(data.shape) == 1:
             self.matrix = np.concatenate((self.matrix, [data]))
@@ -65,7 +67,7 @@ class Table:
         for row in self.matrix:
             for (col_idx, col_name) in zip(used_col_idx, used_col_names):
                 value = row[col_idx]
-                if self.col_dtypes[col_name] == str:
+                if self.dtypes[col_name] == str:
                     value = "\"" + value + "\""
                 exec('{} = {}'.format(col_name, value))
             if eval(query):

@@ -70,6 +70,7 @@ class MyParser(Parser):
 
     @_('expr')
     def statement(self, p):
+        # 完成
         # print("expr")
         if p.expr in self.names:
             print(self.names[p.expr])
@@ -85,14 +86,17 @@ class MyParser(Parser):
 
     @_('OUTPUT "(" NAME "," NAME ")"')
     def statement(self, p):
+        # 完成
         self.names[p.NAME0].to_csv(p.NAME1, sep='|')
 
     @_('INPUT "(" NAME ")"')
     def expr(self, p):
+        # 完成
         return read_csv(p.NAME, sep='|')
 
     @_('SELECT "(" NAME "," expr ")"')
     def expr(self, p):
+        # 完成 no dict
         # print('SELECT "(" NAME "," expr ")"')
         return self.names[p.NAME].query(p.expr)
 
@@ -106,6 +110,7 @@ class MyParser(Parser):
 
     @_('PROJECT "(" NAME "," expr ")"')
     def expr(self, p):
+        # 完成
         l = p.expr
         if type(l) != list:
             l = [p.expr]
@@ -199,7 +204,7 @@ class MyParser(Parser):
 if __name__ == '__main__':
     lexer = MyLexer()
     parser = MyParser()
-    test_mode = "auto"  # auto
+    test_mode = "auto"  # auto是我写的自动化测试，input是老师的原先测试，上交作业的时候改成 input
     if test_mode == "input":
         while True:
             try:
@@ -213,7 +218,7 @@ if __name__ == '__main__':
     elif test_mode == "auto":
         lexer = MyLexer()
         parser = MyParser()
-        with open('test.txt', 'r') as file:
+        with open('test', 'r') as file:
             lines = [line.rstrip() for line in file.readlines()]  # All lines including the blank ones
             commands = [line for line in lines if line]  # Non-blank lines
         for i in range(len(commands)):
